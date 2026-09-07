@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HowGo · 登录</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <div class="login-kicker">HowGo · Independent Social</div>
+    <div class="login-logo">
+      <span class="logo-badge howgo">H</span>
+      <h1>HowGo</h1>
+      <p class="login-slogan">基于热土生态的独立社交空间<br />私聊 · 群聊 · 朋友圈</p>
+    </div>
+
+    <div id="loginError" class="login-error hidden"></div>
+
+    <button id="btnUserLogin" class="btn-primary btn-block">使用热土账号登录</button>
+    <p class="login-tip">尚未注册热土账号？登录页可直接注册，之后即可一键进入 HowGo</p>
+
+    <div class="login-divider"><span>管理员入口</span></div>
+    <button id="btnAdminLogin" class="btn-ghost btn-block">HowGo 管理员登录</button>
+
+    <p class="login-foot">HowGo · howgo.laswi.com.cn</p>
+  </div>
+
+  <script>
+    var err = new URLSearchParams(location.search).get('error');
+    if (err) {
+      var box = document.getElementById('loginError');
+      box.textContent = decodeURIComponent(err);
+      box.classList.remove('hidden');
+    }
+    function go(role) {
+      var b = role === 'admin' ? document.getElementById('btnAdminLogin') : document.getElementById('btnUserLogin');
+      b.disabled = true;
+      b.textContent = '正在跳转热土登录...';
+      location.href = '/auth/login?role=' + role;
+    }
+    document.getElementById('btnUserLogin').addEventListener('click', function () { go('user'); });
+    document.getElementById('btnAdminLogin').addEventListener('click', function () { go('admin'); });
+  </script>
+</body>
+</html>
